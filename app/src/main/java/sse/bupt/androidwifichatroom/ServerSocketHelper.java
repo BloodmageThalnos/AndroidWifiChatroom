@@ -20,42 +20,46 @@ public class ServerSocketHelper {
         mainActivity = mainActivity_;
     }
 
-    private void receive() throws IOException {
-        byte[] buffer = new byte[65507];
-        @SuppressWarnings("resource")
-        DatagramSocket datagramSocket = new DatagramSocket(port);
-        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-        while (true) {
-            datagramSocket.receive(packet);
-            String s = new String(packet.getData(), 0, packet.getLength());
-            serverIP=packet.getAddress().toString();
-            System.out.println(packet.getAddress() + ":" + packet.getPort() + "    →    " + s);
-        }
-    }
-
-    public void broadcast(String msg, int port) throws IOException{
+    private void broadcast(String msg, int port) throws IOException{
         DatagramSocket datagramSocket = new DatagramSocket();
-        String address = ((EditText)mainActivity.findViewById(R.id.editText4)).getText().toString();
+        //String address = ((EditText)mainActivity.findViewById(R.id.editText4)).getText().toString();
+        String address = "";
         if(address.isEmpty()){
             address = "255.255.255.255";
         }
-        mainActivity.log("To address: "+address);
+        mainActivity.log("Broadcast to address: "+address);
         DatagramPacket datagramPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length,
                 InetAddress.getByName(address), port);
         datagramSocket.send(datagramPacket);
         datagramSocket.close();
     }
 
-    public void startBroadcast(final String msg) {
+    public void broadcastMessage(final String msg) {
+        new Thread() {
+            public void run() {
+                try {
+                    MsgP ms = new MsgP();
+                    ms._ = msg;
+                    ms.type = MsgP.MESSAGE_BROADCAST_MESSAGE;
+                    broadcast(ms.toString(), port);
+                    mainActivity.log("Broadcast: " + msg);
+                } catch (Exception e) {
+                    mainActivity.log("Broadcast Exception: " + e.toString());
+                }
+            }
+        }.start();
+    }
+
+    public void broadcastIP(final String msg) {
         new Thread() {
             public void run() {
                 int i = 0;
                 while (i < 400) {
                     i++;
                     try {
-                        Message ms = new Message();
+                        MsgP ms = new MsgP();
                         ms._ = msg;
-                        ms.type = Message.MESSAGE_BROADCAST;
+                        ms.type = MsgP.MESSAGE_BROADCAST;
                         broadcast(msg, port);
                         mainActivity.log("Broadcast: " + msg);
                         Thread.sleep(1000);
