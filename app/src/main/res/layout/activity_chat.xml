@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@mipmap/starry_sky_universe_galaxy_2160x3840"
+    tools:context="sse.bupt.androidwifichatroom.ChatActivity">
+
+
+    <LinearLayout
+        android:id="@+id/Top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@drawable/arrow_back_left"
+            android:scaleX="0.5"
+            android:scaleY="0.6" />
+
+        <Button
+            android:id="@+id/opposite_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"
+            android:background="@drawable/ic_launcher_background"
+            android:text="Saokai" />
+
+        <Button
+            android:id="@+id/facetime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@android:drawable/ic_menu_camera"
+            android:scaleY="0.8" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/bottom_bar"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Top_bar"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_launcher_background"
+        android:paddingTop="10dp"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
+
+    <!--<include-->
+    <!--android:id="@+id/chat_content"-->
+    <!--layout="@layout/content_chat"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1" />-->
+
+
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.12"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="526dp">
+
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="5"
+            android:background="@drawable/shape"
+            android:backgroundTint="@android:color/background_light"
+            android:gravity="center_horizontal"
+            android:paddingLeft="4dp"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Send"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>

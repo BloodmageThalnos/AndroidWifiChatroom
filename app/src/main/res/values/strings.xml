@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">AndroidWifiChatroom</string>
+    <string name="app_name">LemonChat</string>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>

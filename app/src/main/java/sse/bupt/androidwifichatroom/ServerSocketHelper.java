@@ -12,60 +12,34 @@ import java.net.InetAddress;
  */
 
 public class ServerSocketHelper {
-    private MainActivity mainActivity;
-    private String serverIP;
+    private ChatActivity chatActivity;
     private int port = 14396;
 
-    public ServerSocketHelper(MainActivity mainActivity_){
-        mainActivity = mainActivity_;
+    ServerSocketHelper(ChatActivity chatActivity){
+        this.chatActivity = chatActivity;
     }
 
     private void broadcast(String msg, int port) throws IOException{
         DatagramSocket datagramSocket = new DatagramSocket();
-        //String address = ((EditText)mainActivity.findViewById(R.id.editText4)).getText().toString();
         String address = "";
         if(address.isEmpty()){
             address = "255.255.255.255";
         }
-        mainActivity.log("Broadcast to address: "+address);
+        chatActivity.log("Broadcast to address: "+address);
         DatagramPacket datagramPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length,
                 InetAddress.getByName(address), port);
         datagramSocket.send(datagramPacket);
         datagramSocket.close();
     }
 
-    public void broadcastMessage(final String msg) {
+    void broadcastMessage(final String msg) {
         new Thread() {
             public void run() {
                 try {
-                    MsgP ms = new MsgP();
-                    ms._ = msg;
-                    ms.type = MsgP.MESSAGE_BROADCAST_MESSAGE;
-                    broadcast(ms.toString(), port);
-                    mainActivity.log("Broadcast: " + msg);
+                    broadcast(msg, port);
+                    chatActivity.log("Broadcast: " + msg);
                 } catch (Exception e) {
-                    mainActivity.log("Broadcast Exception: " + e.toString());
-                }
-            }
-        }.start();
-    }
-
-    public void broadcastIP(final String msg) {
-        new Thread() {
-            public void run() {
-                int i = 0;
-                while (i < 400) {
-                    i++;
-                    try {
-                        MsgP ms = new MsgP();
-                        ms._ = msg;
-                        ms.type = MsgP.MESSAGE_BROADCAST;
-                        broadcast(msg, port);
-                        mainActivity.log("Broadcast: " + msg);
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                        mainActivity.log("Exception: " + e.toString());
-                    }
+                    chatActivity.log("Broadcast exception: " + e.toString());
                 }
             }
         }.start();

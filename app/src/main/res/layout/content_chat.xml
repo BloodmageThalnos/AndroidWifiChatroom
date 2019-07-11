@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="sse.bupt.androidwifichatroom.ChatActivity"
+    tools:showIn="@layout/activity_chat">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@mipmap/starry_sky_universe_galaxy_2160x3840"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
+</LinearLayout>

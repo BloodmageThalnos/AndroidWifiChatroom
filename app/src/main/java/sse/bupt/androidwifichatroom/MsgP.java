@@ -6,18 +6,18 @@ package sse.bupt.androidwifichatroom;
 
 public class MsgP {
     public int type;
-    public String _;
+    public String contenT;
     static final int MESSAGE_BROADCAST = 0;
     static final int MESSAGE_BROADCAST_MESSAGE = 1;
 
     static public MsgP fromString(String str) {
         MsgP it = new MsgP();
         it.type = Integer.parseInt(str.substring(0,1));
-        it._ = str.substring(1);
+        it.contenT = str.substring(1);
         return it;
     }
     public String toString() {
         String sType = "" + type;
-        return sType + _;
+        return sType + contenT;
     }
 }

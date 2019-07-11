@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friend_list_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@android:color/transparent"
+    tools:context="sse.bupt.androidwifichatroom.ChatActivity">
+
+
+    <LinearLayout
+        android:id="@+id/Top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@mipmap/lemon_icon"
+            android:scaleX="0.5"
+            android:scaleY="0.6" />
+
+        <Button
+            android:id="@+id/opposite_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"
+            android:background="@drawable/ic_launcher_background"
+            android:fontFamily="monospace"
+            android:text="LemonChat"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/facetime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@android:drawable/star_big_on"
+            android:scaleY="0.8" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/friend_list_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_above="@+id/bottom_bar"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/group_chat_room"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@android:color/background_light"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
+
+    <LinearLayout
+        android:id="@+id/group_chat_room"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/Top_bar">
+
+        <ImageView
+            android:id="@+id/group_tx"
+
+            android:layout_width="0dp"
+
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+        <LinearLayout
+            android:id="@+id/group_name_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_marginStart="0dp"
+
+            android:layout_weight="5"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="monospace"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="10dp"
+                android:text="全民制作人们"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<include-->
+    <!--android:id="@+id/chat_content"-->
+    <!--layout="@layout/content_chat"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1" />-->
+
+
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.12"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="526dp">
+
+        <TextView
+            android:id="@+id/send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Todo"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>
