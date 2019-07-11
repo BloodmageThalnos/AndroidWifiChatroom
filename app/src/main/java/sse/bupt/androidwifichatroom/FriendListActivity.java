@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +35,37 @@ public class FriendListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friend_list);
 
-        initFriendList();
+        LinearLayout groupLinerLayout = findViewById(R.id.group_chat_room);
+        groupLinerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FriendListActivity.this,ChatActivity.class);
+                intent.putExtra("Info", new Friend("群聊", null));//将头像和名称传递给chatactivity
+                startActivity(intent);
+            }
+        });
+    }
 
-        fRecycleView = (RecyclerView)findViewById(R.id.friend_list_window);
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updAteFriendList();
+    }
+
+    private void updAteFriendList(){
+        friendList =  FriendListService.getFriendList_v1();
+
+        fRecycleView = (RecyclerView) findViewById(R.id.friend_list_window);
         LinearLayoutManager mlayoutManager = new LinearLayoutManager(this);
 //        mlayoutManager.setStackFromEnd(true);
         fRecycleView.setLayoutManager(mlayoutManager);
-        friendAdapter= new FriendAdapter(friendList);
-        friendAdapter.setmOnItemClickListener(new OnItemClickListener(){
-
+        friendAdapter = new FriendAdapter(friendList);
+        friendAdapter.setmOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(FriendListActivity.this,ChatActivity.class);
-                intent.putExtra("Info",friendList.get(position));//将头像和名称传递给chatactivity
+                Intent intent = new Intent(FriendListActivity.this, ChatActivity.class);
+                intent.putExtra("Info", friendList.get(position));//将头像和名称传递给chatactivity
                 startActivity(intent);
             }
         });
@@ -67,5 +86,23 @@ public class FriendListActivity extends AppCompatActivity {
         friendList.add(f2);
         ChatRecords.update(f1);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent intent){
+        Log.d("到这了1",requestCode+"");
+        switch (requestCode){
+            case 1:
+                Log.d("到这了2",resultCode+"");
+                if(resultCode == RESULT_OK){
+                    Log.d("到这了3",resultCode+"");
+                    Intent intent1 = this.getIntent();
+//                    Friend f = (Friend) intent1.getSerializableExtra("records");
+//                    ChatRecords.update(f);
+//                    Log.d("返回",ChatRecords.getRecords(f.getName()).toString());
+                }
+                break;
+            default:
+        }
     }
 }

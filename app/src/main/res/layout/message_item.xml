@@ -42,7 +42,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
                 android:gravity="center_vertical|start"
-                android:maxWidth="300dp"
+                android:maxWidth="200dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="what"
                 android:textAlignment="viewStart"
                 android:textColor="#fff"
@@ -65,9 +68,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/msg_right"
-            android:gravity="center|end"
-            android:orientation="vertical"
+            android:gravity="left|center_vertical|end"
 
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
             android:visibility="visible"
             tools:layout_editor_absoluteX="270dp">
 
@@ -75,10 +81,14 @@
                 android:id="@+id/right_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="0dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="end"
-                android:maxWidth="300dp"
+                android:maxWidth="200dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="10dp"
                 android:text="what"
+                android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:visibility="visible" />
@@ -90,7 +100,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:visibility="visible"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@mipmap/lemon_icon" />
 
     </LinearLayout>
 

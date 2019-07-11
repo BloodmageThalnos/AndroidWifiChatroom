@@ -1,16 +1,20 @@
 package sse.bupt.androidwifichatroom;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class ClientSocketHelper {
-    private final int port = 14396;
+    private final int port;
     private ChatActivity chatActivity;
+    private String lastIP;
 
-    ClientSocketHelper(ChatActivity chatActivity) {
+    ClientSocketHelper(ChatActivity chatActivity, int port) {
         this.chatActivity = chatActivity;
+        this.port = port;
     }
 
     private String receive(int port) throws IOException {
@@ -21,7 +25,12 @@ public class ClientSocketHelper {
         datagramSocket.close();
         final String s = new String(packet.getData(), 0, packet.getLength());
 
-        chatActivity.log("Receive: "+packet.getAddress().toString()+":"+ packet.getPort() + " => " + s);
+        Log.d("TAG", "Client Receive: ："+s);
+        if(chatActivity!=null) {
+            chatActivity.log("Receive: " + packet.getAddress().toString() + ":" + packet.getPort() + " => " + s);
+        }
+
+        lastIP = packet.getAddress().getHostAddress();
 
         return s;
     }
@@ -33,26 +42,31 @@ public class ClientSocketHelper {
                 while(true) {
                     try {
                         final String s = receive(port);
-                        processMessage(s);
+                        processMessage(s, lastIP);
                     } catch (Exception e) {
-                        chatActivity.log("Receive Exception: " + e.toString());
+                        Log.d("TAG", "监听 Exception："+e.toString());
+                        if(chatActivity!=null) {
+                            chatActivity.log("Receive Exception: " + e.toString());
+                        }
                     }
                 }
             }
         }.start();
     }
 
-    void processMessage(String msg){
+    void processMessage(String msg, String IP){
     }
 
     private void broadcast(String msg, int port) throws IOException{
         DatagramSocket datagramSocket = new DatagramSocket();
         //String address = ((EditText)mainActivity.findViewById(R.id.editText4)).getText().toString();
         String address = "";
-        if(address.isEmpty()){
+        if(address.isEmpty()) {
             address = "255.255.255.255";
         }
-        chatActivity.log("Broadcast to address: "+address);
+        if(chatActivity!=null) {
+            chatActivity.log("Broadcast to address: " + address);
+        }
         DatagramPacket datagramPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length,
                 InetAddress.getByName(address), port);
         datagramSocket.send(datagramPacket);

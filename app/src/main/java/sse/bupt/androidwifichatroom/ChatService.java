@@ -1,35 +1,38 @@
 package sse.bupt.androidwifichatroom;
 
+import android.util.Log;
+
 import java.util.Random;
 
 /**
- * Created by Administrator on 7/8/2019.
+ * Created by Little Dva on 7/8/2019.
  */
 
 class ChatService {
-    private ChatActivity chatActivity;
+    public static ChatService chatService;
+    public ChatActivity chatActivity;
     private String name;
+    private ClientSocketHelper clientSocketHelper;
 
-    ChatService(ChatActivity chatActivity) {
-        this.chatActivity = chatActivity;
-        Random random = new Random(System.currentTimeMillis());
-        String[] names = {"Ana", "Bob", "Kai", "Alice", "Dva", "Messi", "Lucio", "Jennie", "Dembele", "Doomfist", "Solder76"};
-        name = names[(((int)System.currentTimeMillis() % names.length)+names.length)%names.length];
+    ChatService() {
+        this.name = MyInfo.getMyName();
     }
 
     void sendMessage(String msg) {
         MsgP ms = new MsgP();
         ms.contenT = name + ": " + msg;
         ms.type = MsgP.MESSAGE_BROADCAST_MESSAGE;
+        Log.d("TAG", "我发了："+ms.toString());
 
-        ServerSocketHelper ssh = new ServerSocketHelper(chatActivity);
+        ServerSocketHelper ssh = new ServerSocketHelper(chatActivity, 4747);
         ssh.broadcastMessage(ms.toString());
     }
 
     void startListening() {
-        ClientSocketHelper clientSocketHelper = new ClientSocketHelper(chatActivity){
+        clientSocketHelper = new ClientSocketHelper(chatActivity, 4747){
             @Override
-            void processMessage(String s){
+            void processMessage(String s, String ip){
+                Log.d("TAG", s);
                 MsgP msgP = MsgP.fromString(s);
                 chatActivity.log(s);
 
@@ -42,13 +45,18 @@ class ChatService {
                             break;
                         }
 
-                        chatActivity.showMsg(msgQ);
+                        if(chatActivity != null) {
+                            chatActivity.showMsg(msgQ);
+                        }
                         break;
                     default:
-                        chatActivity.log("Unknown message: "+msgP.contenT);
+                        if(chatActivity != null) {
+                            chatActivity.log("Unknown message: " + msgP.contenT);
+                        }
                 }
             }
         };
         clientSocketHelper.listenMessage();
     }
+
 }
